@@ -4,6 +4,8 @@ import com.jeancarlos.vitaltrack.vitaltrackapi.dto.RegisterRequest;
 import com.jeancarlos.vitaltrack.vitaltrackapi.entity.User;
 import com.jeancarlos.vitaltrack.vitaltrackapi.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
