@@ -17,7 +17,6 @@ public class JwtService {
     private String secret;
 
     public String generateToken(User user) {
-
         return Jwts.builder()
                 .subject(user.getId().toString())
                 .issuedAt(new Date())
@@ -32,7 +31,6 @@ public class JwtService {
     }
 
     public Long extractUserId(String token) {
-
         String subject = Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
@@ -44,7 +42,6 @@ public class JwtService {
     }
 
     public boolean validateToken(String token) {
-
         try {
             Jwts.parser()
                     .verifyWith(getSigningKey())
