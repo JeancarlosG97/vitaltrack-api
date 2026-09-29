@@ -18,6 +18,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public User register(RegisterRequest request) {
         Optional<User> existingUser =
@@ -51,6 +52,8 @@ public class AuthService {
             throw new InvalidCredentialsException("Invalid credentials.");
         }
 
-        return "Login successful!";
+        return jwtService.generateToken(
+                existingUser.get()
+        );
     }
 }
