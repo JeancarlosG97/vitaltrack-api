@@ -8,22 +8,19 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "workouts")
+@Table(name = "heart_rates")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Workout {
+public class HeartRate {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;
 
-    private String type;
+    private int heartRate;
 
-    private int durationMinutes;
-
-    private int caloriesBurned;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime recordedAt = LocalDateTime.now();
 }
