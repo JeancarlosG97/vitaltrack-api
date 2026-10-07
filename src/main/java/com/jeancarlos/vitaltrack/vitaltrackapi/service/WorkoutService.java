@@ -6,6 +6,8 @@ import com.jeancarlos.vitaltrack.vitaltrackapi.repository.WorkoutRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class WorkoutService {
@@ -21,5 +23,9 @@ public class WorkoutService {
         workout.setCaloriesBurned(request.getCaloriesBurned());
 
         return workoutRepository.save(workout);
+    }
+
+    public List<Workout> getWorkouts(Long userId) {
+        return workoutRepository.findByUserId(userId);
     }
 }
