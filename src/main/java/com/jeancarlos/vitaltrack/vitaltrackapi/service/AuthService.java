@@ -2,6 +2,7 @@ package com.jeancarlos.vitaltrack.vitaltrackapi.service;
 
 import com.jeancarlos.vitaltrack.vitaltrackapi.dto.LoginRequest;
 import com.jeancarlos.vitaltrack.vitaltrackapi.dto.RegisterRequest;
+import com.jeancarlos.vitaltrack.vitaltrackapi.dto.UpdateGoalsRequest;
 import com.jeancarlos.vitaltrack.vitaltrackapi.entity.User;
 import com.jeancarlos.vitaltrack.vitaltrackapi.exception.EmailAlreadyExistsException;
 import com.jeancarlos.vitaltrack.vitaltrackapi.exception.InvalidCredentialsException;
@@ -55,5 +56,17 @@ public class AuthService {
         return jwtService.generateToken(
                 existingUser.get()
         );
+    }
+
+    public User updateGoals(Long userId, UpdateGoalsRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setTargetWeight(request.getTargetWeight());
+        user.setTargetSleepHours(request.getTargetSleepHours());
+
+        user.setTargetWorkoutsPerWeek(request.getTargetWorkoutsPerWeek());
+
+        return userRepository.save(user);
     }
 }
