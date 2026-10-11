@@ -24,4 +24,10 @@ public class User {
     private String password;
 
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    private Double targetWeight;
+
+    private Double targetSleepHours;
+
+    private Integer targetWorkoutsPerWeek;
 }

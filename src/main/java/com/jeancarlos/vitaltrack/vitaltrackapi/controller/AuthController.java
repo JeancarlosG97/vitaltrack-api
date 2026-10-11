@@ -2,8 +2,11 @@ package com.jeancarlos.vitaltrack.vitaltrackapi.controller;
 
 import com.jeancarlos.vitaltrack.vitaltrackapi.dto.LoginRequest;
 import com.jeancarlos.vitaltrack.vitaltrackapi.dto.RegisterRequest;
+import com.jeancarlos.vitaltrack.vitaltrackapi.dto.UpdateGoalsRequest;
+import com.jeancarlos.vitaltrack.vitaltrackapi.dto.UserProfileResponse;
 import com.jeancarlos.vitaltrack.vitaltrackapi.entity.User;
 import com.jeancarlos.vitaltrack.vitaltrackapi.service.AuthService;
+import com.jeancarlos.vitaltrack.vitaltrackapi.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public User register(@RequestBody RegisterRequest request) {
@@ -22,5 +26,26 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
         return authService.login(request);
+    }
+
+    @PutMapping("/goals")
+    public UserProfileResponse updateGoals(@RequestHeader("Authorization") String authHeader, @RequestBody UpdateGoalsRequest request) {
+        Long userId = getUserIdFromToken(authHeader);
+
+        User user = authService.updateGoals(userId, request);
+
+        return new UserProfileResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getTargetWeight(),
+                user.getTargetSleepHours(),
+                user.getTargetWorkoutsPerWeek()
+        );
+    }
+
+    private Long getUserIdFromToken(String authHeader) {
+        String token = authHeader.substring(7);
+        return jwtService.extractUserId(token);
     }
 }
